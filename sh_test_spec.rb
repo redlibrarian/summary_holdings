@@ -4,6 +4,9 @@ require "./sh_test.rb"
 include SummaryHoldings
 
 describe SummaryHoldings do
+  
+  # Basically what this does is gives an array of threshold statements as I get them from Jeremy, then tests to see whether the proper summary statement is printed.
+  
   it "properly transforms a threshold with all overlapping ranges, with an embargo, embargo superseded by present" do
     summaryHoldings = ["(1956)-(1965)", "(1966)-(1999)", "(1990)-most recent 3 years unavailable", "(1995)", "(2000)-"]
     expect(SummaryHoldings.pretty_print(SummaryHoldings.merge(SummaryHoldings.compile(summaryHoldings)))).to eq("1956-present")
@@ -33,6 +36,8 @@ describe SummaryHoldings do
     summaryHoldings = ["(1956)-(1960)", "(1966)-Most recent 2 years unavailable"]
     expect(pretty_print(merge(compile(summaryHoldings)))).to eq("1956-1960, 1966-present, Most recent 2 years unavailable")
   end
+  
+  # These last two have multiple thresholds which combine overlapping and disjoint dates. Merging these into a single statement is quite a bit tricker, so I've left them as clean but distinct ranges. Hopefully this is sufficient for now.
   
   it "properly transforms: one disjoint, one overlap" do
     summaryHoldings = ["(1956)-(1960)", "(1966)-(1999)", "(1990)-(2010)"]
