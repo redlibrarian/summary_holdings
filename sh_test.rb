@@ -31,9 +31,9 @@ module SummaryHoldings
     else # combined not empty
       pretty = ""
       combined.each { |a|
-        pretty += pp(a)
+        pretty += ", #{pp(a)}"
       }
-      statement = pretty_print([range, [], nil])+", "+pretty
+      statement = pretty_print([range, [], nil])+pretty
     end
     (message.nil? or message.empty?) ? statement : statement+", #{message}"
   end
@@ -71,10 +71,14 @@ module SummaryHoldings
       combined << combine_ranges(merged, holdings[:range]) unless overlap?(merged, holdings[:range])
     }
 
+    combined = combined.flatten.uniq.reject{|a| overlap?(merged, a)}
+
+
     if override_embargo
-      return merged, combined.flatten.drop(1), nil
+      return merged, combined, nil
     else
-      return merged, combined.flatten.drop(1), message  # drop(1) to get rid of the duplicated first range 
+      return merged, combined, message
     end
   end
 end
+

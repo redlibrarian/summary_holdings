@@ -36,11 +36,11 @@ describe SummaryHoldings do
   
   it "properly transforms: one disjoint, one overlap" do
     summaryHoldings = ["(1956)-(1960)", "(1966)-(1999)", "(1990)-(2010)"]
-    expect(pretty_print(merge(compile(summaryHoldings)))).to eq("1956-1960, 1966-2010")
+    expect(pretty_print(merge(compile(summaryHoldings)))).to eq("1956-1960, 1966-1999, 1990-2010")
   end
 
   it "properly transforms: one disjoint, one overlap, open-ended" do  
     summaryHoldings = ["(1956)-(1960)", "(1966)-(1999)", "(1990)-"]
-    expect(pretty_print(merge(compile(summaryHoldings)))).to eq("1956-1960, 1966-present")
+    expect(pretty_print(merge(compile(summaryHoldings)))).to eq("1956-1960, 1966-1999, 1990-present")
   end
 end
